@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mehrmaid Online</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1>Mehrmaid Online</h1>
+      <p class="subtitle">Render mehrmaid-style diagrams in your browser.</p>
+
+      <label for="source">Diagram source</label>
+      <textarea id="source" spellcheck="false">graph LR
+A("**Mehrmaid** node")
+A --> B("`Markdown` in labels")
+B --> C("Supports **bold** and _markdown_")</textarea>
+
+      <div class="actions">
+        <button id="render" type="button">Render</button>
+        <button id="download-svg" type="button" disabled>Download SVG</button>
+        <button id="download-png" type="button" disabled>Download PNG</button>
+      </div>
+
+      <p id="status" role="status" aria-live="polite"></p>
+      <section id="output" aria-label="Rendered diagram"></section>
+      <div id="measure" aria-hidden="true"></div>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
