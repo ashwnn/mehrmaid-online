@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mehrmaid Online</title>
+    <title>Merhmaid Renderer</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="app">
-      <h1>Mehrmaid Online</h1>
-      <p class="subtitle">Render mehrmaid-style diagrams in your browser.</p>
+      <h1>Merhmaid Renderer</h1>
+      <p class="subtitle">Render Mermaid flowcharts with Markdown-rich node labels.</p>
 
       <label for="source">Diagram source</label>
       <textarea id="source" spellcheck="false">graph LR
-A("**Mehrmaid** node")
-A --> B("`Markdown` in labels")
-B --> C("Supports **bold** and _markdown_")</textarea>
+A("**Markdown** node")
+A --> B("`Inline code` in labels")
+B --> C("Supports **bold** and _italic_ text")</textarea>
 
       <div class="actions">
         <button id="render" type="button">Render</button>
