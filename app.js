@@ -76,6 +76,13 @@ function buildMarkdownNode(markdown, id) {
   return { id, node: container, width, height };
 }
 
+function previousNonWhitespace(source, index) {
+  for (let i = index - 1; i >= 0; i -= 1) {
+    if (!/\s/.test(source[i])) return source[i];
+  }
+  return "";
+}
+
 function nextNonWhitespace(source, index) {
   for (let i = index; i < source.length; i += 1) {
     if (!/\s/.test(source[i])) return source[i];
@@ -108,13 +115,13 @@ function isQuotedNodeLabel(source, quoteIndex, openingDelimiters) {
   while (cursor >= 0 && openingDelimiters.has(source[cursor])) cursor -= 1;
   while (cursor >= 0 && /\s/.test(source[cursor])) cursor -= 1;
 
-  return cursor >= 0 && /[A-Za-z0-9_-]/.test(source[cursor]);
+  return cursor >= 0 && /[A-Za-z0-9_\-]/.test(source[cursor]);
 }
 
 function parseMehrmaid(source) {
   const replacements = [];
   const labels = [];
-  const openingDelimiters = new Set(["(", "[", "{", ">"]).
+  const openingDelimiters = new Set(["(", "[", "{", ">"]); 
   const closingDelimiters = new Set([")", "]", "}"]);
 
   for (let index = 0; index < source.length; index += 1) {
