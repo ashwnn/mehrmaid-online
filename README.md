@@ -1,34 +1,47 @@
-# mehrmaid-online
+# merhmaid-renderer
 
-A minimal static GitHub Pages app for rendering [Mehrmaid](https://github.com/huterguier/obsidian-mehrmaid)-style flowcharts in the browser.
+A browser-based renderer for Mermaid flowcharts with Markdown-rich node labels, inspired by [Obsidian Mehrmaid](https://github.com/huterguier/obsidian-mehrmaid).
+
+Paste a diagram, render it locally in the browser, and export the result as SVG or PNG. No backend or build step is required.
 
 ## Features
 
-- Paste Mermaid `graph` or `flowchart` source
-- Render Markdown inside quoted node labels
-- Sanitize rendered Markdown before inserting it into the diagram
-- Download the rendered diagram as SVG or PNG
-- Render with `Ctrl+Enter` or `Cmd+Enter`
+- Supports Mermaid `graph` and `flowchart` diagrams
+- Renders Markdown inside double-quoted node labels
+- Sanitizes rendered label HTML with DOMPurify
+- Exports diagrams as SVG or high-resolution PNG
+- Supports `Ctrl+Enter` and `Cmd+Enter` to render
+- Deploys as a static site on GitHub Pages
+
+## Example
+
+```mermaid
+graph LR
+A("**Markdown** label") --> B("`Inline code`")
+B --> C("A small table:<br><br>| Key | Value |<br>| --- | --- |<br>| Mode | Local |")
+```
+
+Only double-quoted flowchart node labels are processed as Markdown. Other quoted Mermaid values, including subgraph titles and configuration values, are left unchanged.
 
 ## Run locally
 
-Serve the repository over HTTP. ES modules are not reliably supported when `index.html` is opened directly from `file://`.
+Serve the repository over HTTP:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`.
+Open `http://localhost:8000`.
 
-The app keeps Marked and DOMPurify vendored locally. Mermaid 11.15.0 is loaded at runtime from jsDelivr, with unpkg as a fallback, because Mermaid's ESM distribution requires a large dynamic-import chunk tree that was missing from the original repository.
+Opening `index.html` directly through `file://` is not supported because the application uses ES modules.
 
-## Supported syntax
+## Runtime dependencies
 
-Mehrmaid processing is limited to quoted labels attached to Mermaid flowchart nodes, for example:
+- Mermaid 11.15.0 is loaded from jsDelivr, with unpkg as a fallback.
+- Marked and DOMPurify are vendored in the repository.
+- Diagram source is processed in the browser and is not sent to an application backend.
 
-```mermaid
-graph LR
-A("**Bold** and _italic_") --> B("`inline code`")
-```
+## Limitations
 
-Other quoted Mermaid values, such as subgraph titles and configuration values, are left unchanged.
+- Mehrmaid-style Markdown processing currently supports only Mermaid flowcharts.
+- PNG export of labels containing remote images can be blocked by the image host's CORS policy.
